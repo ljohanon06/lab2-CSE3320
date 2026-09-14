@@ -69,7 +69,8 @@ el1_entry:
 setup_sp: 	
 	// Q1: quest: boot. Set sp to be at the end (or top) of the bootstack (cpu0) 
 	ldr x1, =boot_stacks	// sched.c	char boot_stacks[NCPU][THREAD_SIZE]
-	add x1, x1, #THREAD_SIZE // THREAD_SIZE = PAGE_SIZE = 1 << PAGE_SHIFT = 1 << 12
+	ldr x2, =PAGE_SIZE	// THREAD_SIZE = PAGE_SIZE = 1 << PAGE_SHIFT = 1 << 12
+	add x1, x1, x2 		// sp = base + 1(cpu0) * THREAD_SIZE
 	mov sp, x1
 
 	// install irq vectors
