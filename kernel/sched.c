@@ -223,7 +223,7 @@ void switch_to(struct task_struct * next) {
     */
 
     /* below: cpu_switch_to() in switch.S. it will branch to next->cpu_context.pc */
-cpu_switch_to(0, 0); /* STUDENT: TODO: replace this */
+	cpu_switch_to(prev, next);
 }
 
 #define CPU_UTIL_INTERVAL 10  // cal cpu measurement every X ticks
