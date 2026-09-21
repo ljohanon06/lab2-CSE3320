@@ -609,7 +609,8 @@ int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
 
     // prep new task's scheduler context: assign values to the pc/sp of new
     // task's cpu_context
-	/* STUDENT: TODO: your code here */
+	p->cpu_context->x19 = fn;
+	p->cpu_context->x20 = arg;
 	
     release(&cur->lock);
 	release(&p->lock);
