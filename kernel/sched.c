@@ -593,8 +593,8 @@ int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
     acquire(&cur->lock);	
 
     // load fn/arg to cpu context. cf ret_from_fork
-    	p->cpu_context->x19 = fn;
-	p->cpu_context->x20 = arg;
+	p->cpu_context.x19 = fn;
+	p->cpu_context.x20 = arg;
 
     // also inherit task name
     if (name)
@@ -610,7 +610,8 @@ int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
 
     // prep new task's scheduler context: assign values to the pc/sp of new
     // task's cpu_context
-	
+	p->cpu_context.pc = (unsigned long) &ret_from_fork;
+	p->cpu_context.sp = (unsigned long)(&kernel_stacks[pid%NR_TASKS] + THREAD_SIZE);
 	
     release(&cur->lock);
 	release(&p->lock);
